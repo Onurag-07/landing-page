@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        body {
+            padding: 10px 50px;
+        }
+
+        .formdesign {
+            font-size: 20px;
+        }
+
+        .formdesign input {
+            border: 1px solid blue;
+            padding: 8px 8px;
+            width: 30%;
+            border-radius: 4px;
+            font-size: 15px;
+            margin: 12px;
+            
+        }
+
+        .form_error {
+            color: red;
+        }
+        .btn {
+            border-radius: 9px;
+            width: 100px;
+            height: 50px;
+            font-size: 25px;
+            margin: 22px 20px;
+        }
+        .fb{
+            border: 8px solid rgb(121, 98, 150);
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <form class= "fb" action="/myaction.php" name="myform" onsubmit="return validateform()" method="post">
+        <div class="frm">
+        <div class="formdesign" id="name">
+            <label class="lab">Name:</label><input type="text" name="fname" placeholder="Name" required autocomplete="off"><b><span class="form_error"></span></b>
+        </div>
+
+        <div class="formdesign" id="email">
+           <label class="lab">Email:</label> <input type="email" name="femail" placeholder="Email" required autocomplete="off"><b><span
+                    class="form_error"></span></b>
+        </div>
+
+        <div class="formdesign" id="phone">
+            <label class="lab">Phone:</label> <input type="phone" name="fphone" placeholder="Phone" required autocomplete="off"><b><span
+                    class="form_error"></span></b>
+        </div>
+
+        <div class="formdesign" id="password">
+            <label class="lab">Password:</label> <input type="password" name="fpass" placeholder="Pasword" required autocomplete="off"><b><span
+                    class="form_error"></span></b>
+        </div>
+
+        <div class="formdesign" id="pa">
+            <label class="lab">Confirm Password:</label> <input type="password" name="fcpass" placeholder="Confirm Password" required autocomplete="off"><b><span
+                    class="form_error"></span></b>
+        </div>
+
+        <input class="btn" type="submit" value="Submit">
+        </div>
+    </form>
+</body>
+<script>
+    function clearErrors() {
+       var errors = document.getElementsByClassName('form_error');
+        for (let items of errors) {
+            items.innerHTML = "";
+        }
+    }
+
+    function seterror(id, error) {
+        element = document.getElementById(id);
+        element.getElementsByClassName('form_error')[0].innerHTML = error;
+    }
+
+    function validateform() {
+        var returnval = true;
+        clearErrors();
+
+        var name = document.forms['myform']["fname"].value;
+        if (name.length < 5) {
+            seterror("name", "*Length is too short");
+            returnval = false;
+        }
+        var email = document.forms['myform']["femail"].value;
+        if (email.length > 25) {
+            seterror("email", "* Email length is too long");
+            returnval = false;
+        }
+        var phone = document.forms['myform']["fphone"].value;
+        if (phone.length != 10) {
+            seterror("phone", "* Phone no is not valid");
+            returnval = false;
+        }
+        var password = document.forms['myform']["fpass"].value;
+        var cpassword = document.forms['myform']['fcpass'].value;
+        if(password.length<5){
+            seterror("password", "* Password must be of 5 digit");
+            returnval = false;
+        }
+        if(password!=cpassword){
+            seterror("password", "* Password should be matched");
+            returnval = false;
+        }
+
+        return returnval;
+    }
+</script>
+
+</html>
